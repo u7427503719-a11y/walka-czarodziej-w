@@ -45,12 +45,16 @@ loginButton.addEventListener('click', () => {
     return;
   }
   loginError.textContent = '';
-  socket = new WebSocket(`ws://${location.host}`);
+
+  socket = new WebSocket("wss://WSS_LINK"); // <<< TU WSTAW SWÓJ LINK Z RENDER
+
   socket.addEventListener('open', () => {
     socket.send(JSON.stringify({ type: 'login', nick, password, device: selectedDevice }));
   });
+
   socket.addEventListener('message', event => {
     const msg = JSON.parse(event.data);
+
     if (msg.type === 'login-ok') {
       currentNick = nick;
       loginScreen.classList.add('hidden');
@@ -64,6 +68,7 @@ loginButton.addEventListener('click', () => {
       renderLeaderboard(msg.entries);
     }
   });
+
   socket.addEventListener('close', () => {
     loginError.textContent = 'Połączenie z serwerem przerwane.';
   });
@@ -123,12 +128,16 @@ window.addEventListener('keyup', e => keys.delete(e.code));
 
 function startGameClient(msg) {
   resizeCanvas(msg.self.device);
+
   localP1 = new Player(200, canvas.height / 2, '#73e1dd', msg.self.nick);
   localP2 = new Player(canvas.width - 200, canvas.height / 2, '#ffb04b', msg.opponent.nick);
+
   bullets = [];
+
   p1NameLabel.textContent = msg.self.nick;
   p2NameLabel.textContent = msg.opponent.nick;
   statusText.textContent = 'POJEDYNEK ROZPOCZĘTY';
+
   lastTime = performance.now();
   requestAnimationFrame(frame);
 }
@@ -160,12 +169,16 @@ function update(dt) {
   bullets.forEach(b => {
     b.x += b.vx * dt;
     b.y += b.vy * dt;
+
     if (distance(b, localP2) < b.radius + localP2.radius) {
       localP2.hp = Math.max(0, localP2.hp - b.damage);
     }
   });
 
-  bullets = bullets.filter(b => b.x > -50 && b.x < canvas.width + 50 && b.y > -50 && b.y < canvas.height + 50);
+  bullets = bullets.filter(b =>
+    b.x > -50 && b.x < canvas.width + 50 &&
+    b.y > -50 && b.y < canvas.height + 50
+  );
 
   p1HpLabel.textContent = `HP: ${localP1.hp}`;
   p2HpLabel.textContent = `HP: ${localP2.hp}`;
@@ -175,7 +188,15 @@ function update(dt) {
 function shoot(player) {
   if (player.ammo <= 0) return;
   player.ammo -= 1;
-  const bullet = new Bullet(player.x, player.y, player === localP1 ? 400 : -400, 0, player);
+
+  const bullet = new Bullet(
+    player.x,
+    player.y,
+    player === localP1 ? 400 : -400,
+    0,
+    player
+  );
+
   bullets.push(bullet);
 }
 
@@ -189,19 +210,23 @@ function draw() {
 
   drawPlayer(localP1);
   drawPlayer(localP2);
+
   bullets.forEach(drawBullet);
 }
 
 function drawPlayer(p) {
   if (!p) return;
+
   ctx.fillStyle = p.color;
   ctx.beginPath();
   ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
   ctx.fill();
 
   const hpRatio = p.hp / 100;
+
   ctx.fillStyle = '#000';
   ctx.fillRect(p.x - 30, p.y - 40, 60, 6);
+
   ctx.fillStyle = hpRatio > 0.5 ? '#73e1dd' : '#ff5f57';
   ctx.fillRect(p.x - 30, p.y - 40, 60 * hpRatio, 6);
 }
@@ -217,8 +242,10 @@ let lastTime = performance.now();
 function frame(now) {
   const dt = (now - lastTime) / 1000;
   lastTime = now;
+
   update(dt);
   draw();
+
   requestAnimationFrame(frame);
 }
 

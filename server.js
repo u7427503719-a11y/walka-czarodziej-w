@@ -1,16 +1,15 @@
 const http = require('http');
 const WebSocket = require('ws');
 
-const accounts = new Map(); // nick -> { password, device, stats }
+const accounts = new Map();
+const waiting = [];
 
 const server = http.createServer((req, res) => {
   res.writeHead(200);
-  res.end('Walka Czarodziejów 2.0');
+  res.end('Serwer działa');
 });
 
 const wss = new WebSocket.Server({ server });
-
-const waiting = [];
 
 wss.on('connection', socket => {
   socket.on('message', raw => {
@@ -47,7 +46,7 @@ wss.on('connection', socket => {
       socket.send(JSON.stringify({
         type: 'login-ok',
         self: { nick, device },
-        opponent: { nick: 'PRZECIWNIK', device: 'desktop' }
+        opponent: { nick: 'OCZEKIWANIE...', device: 'desktop' }
       }));
 
       waiting.push(socket);
@@ -62,6 +61,7 @@ wss.on('connection', socket => {
         wins: acc.stats.wins,
         losses: acc.stats.losses
       })).sort((a, b) => b.rank - a.rank);
+
       socket.send(JSON.stringify({ type: 'leaderboard', entries }));
     }
   });

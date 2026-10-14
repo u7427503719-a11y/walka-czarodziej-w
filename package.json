@@ -1,6 +1,7 @@
 {
-  "name": "walka-czarodziejow-2",
-  "private": true,
+  "name": "walka-czarodziej-w",
+  "version": "1.0.0",
+  "description": "Gra Walka Czarodziejów — serwer WebSocket",
   "scripts": {
     "start": "node server.js"
   },

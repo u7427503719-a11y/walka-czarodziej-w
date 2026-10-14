@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <title>Walka Czarodziejów 2.0</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="loginScreen" class="screen">
+    <h1>Walka Czarodziejów</h1>
+    <label>Nick:<input id="nickInput" maxlength="16"></label>
+    <label>Hasło:<input id="passwordInput" type="password" maxlength="32"></label>
+    <div class="device-row">
+      <button data-device="desktop" class="device-button">Laptop</button>
+      <button data-device="mobile" class="device-button">Urządzenie mobilne</button>
+    </div>
+    <button id="loginButton">Zaloguj się</button>
+    <p id="loginError" class="error"></p>
+  </div>
+
+  <div id="gameScreen" class="screen hidden">
+    <div class="game-shell">
+      <canvas id="gameCanvas"></canvas>
+      <div class="hud">
+        <div class="hud-left">
+          <div id="profileBadge" class="profile-badge">PROFIL</div>
+        </div>
+        <div class="hud-top">
+          <div class="player-panel">
+            <span class="eyebrow">GRACZ 1</span>
+            <span id="p1Name" class="player-name"></span>
+            <span id="p1HpLabel" class="hp-label"></span>
+            <span id="p1AmmoLabel" class="ammo-label"></span>
+          </div>
+          <div class="player-panel">
+            <span class="eyebrow">GRACZ 2</span>
+            <span id="p2Name" class="player-name"></span>
+            <span id="p2HpLabel" class="hp-label"></span>
+            <span id="p2AmmoLabel" class="ammo-label"></span>
+          </div>
+          <div class="status-panel">
+            <span id="statusText">OCZEKIWANIE NA POJEDYNEK…</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="profileModal" class="modal hidden">
+    <div class="modal-window">
+      <h2>Profil</h2>
+      <canvas id="profileCanvas" width="200" height="200"></canvas>
+      <button id="logoutButton">Wyloguj się</button>
+      <button id="leaderboardButton">Topki</button>
+      <button id="closeProfile">Zamknij</button>
+    </div>
+  </div>
+
+  <div id="leaderboardModal" class="modal hidden">
+    <div class="modal-window">
+      <h2>Topki</h2>
+      <div class="leaderboard-tabs">
+        <button data-board="rank">Ranking</button>
+        <button data-board="kills">Kille</button>
+        <button data-board="wins">Wygrane</button>
+        <button data-board="losses">Przegrane</button>
+      </div>
+      <ol id="leaderboardList"></ol>
+      <button id="closeLeaderboard">Zamknij</button>
+    </div>
+  </div>
+
+  <script src="client.js"></script>
+</body>
+</html>

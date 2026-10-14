@@ -38,6 +38,11 @@ html, body {
   margin: 6px 0;
 }
 
+#loginScreen input {
+  padding: 6px 8px;
+  margin-top: 4px;
+}
+
 .device-row {
   display: flex;
   gap: 8px;
@@ -55,6 +60,15 @@ html, body {
 .device-button.selected {
   border-color: var(--orange);
   color: var(--orange);
+}
+
+#loginButton {
+  margin-top: 10px;
+  padding: 8px 14px;
+  border: none;
+  background: var(--orange);
+  color: #050914;
+  cursor: pointer;
 }
 
 .error {
@@ -86,6 +100,11 @@ html, body {
   letter-spacing: .12em;
 }
 
+.hud-top {
+  display: flex;
+  gap: 20px;
+}
+
 .player-panel {
   margin-right: 20px;
 }
@@ -99,6 +118,10 @@ html, body {
   display: block;
   margin-top: 2px;
   color: var(--muted);
+}
+
+.status-panel {
+  align-self: flex-start;
 }
 
 .profile-badge {
@@ -121,6 +144,15 @@ html, body {
   padding: 20px;
   background: #0b1624;
   border: 1px solid var(--orange);
+}
+
+.modal-window button {
+  margin-top: 8px;
+  padding: 6px 10px;
+  border: none;
+  background: var(--orange);
+  color: #050914;
+  cursor: pointer;
 }
 
 .leaderboard-tabs {
